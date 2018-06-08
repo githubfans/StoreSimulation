@@ -1,0 +1,141 @@
+import MySQLdb
+
+
+class Database:
+
+    host = 'localhost'
+    user = 'aji'
+    password = '1234567!'
+    db = 'wikigen'
+
+    def __init__(self):
+        self.connection = MySQLdb.connect(self.host, self.user, self.password, self.db)
+        self.cursor = self.connection.cursor()
+
+    def insert(self, query):
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+        except:
+            self.connection.rollback()
+
+
+
+    def query(self, query):
+        cursor = self.connection.cursor( MySQLdb.cursors.DictCursor )
+        cursor.execute(query)
+
+        return cursor.fetchall()
+
+    def __del__(self):
+        self.connection.close()
+
+
+import sys
+import random
+
+
+def genword(minchars=3,maxchars=5,istitle=0):
+	vocal=('a','e','i','o','u')
+	conso=('w','r','t','y','i','p','s','d','f','g','h','j','k','l','z','c','b','n','m')
+	group = []
+	numchar = random.randint(minchars,maxchars)
+	for i in range(numchar):
+		rnd = random.randint(0,1)
+		if rnd is 0:
+			full_name=random.choice(vocal)+random.choice(conso)
+		if rnd is 1:
+			full_name=random.choice(conso)+random.choice(vocal)
+		group.append(full_name)
+	#assuming he wants at least some kind of seperator between the names.
+	group_string = "".join(group)
+	if istitle is 1:
+		return group_string.title()
+	else:
+		return group_string
+
+
+def genname(minwords=2,maxwords=3,minchars=3,maxchars=5,istitle=1):
+	import random
+	numword = random.randint(minwords,maxwords)
+	group = []
+	for i in range(numword):
+		dword = genword(minchars,maxchars,istitle)
+		group.append(dword)
+	return " ".join(group)
+
+
+def gendesc(minitem=3, maxitem=100, minwords=5, maxwords=10, minchars=3, maxchars=7, istitle=0):
+	import random
+	numitem = random.randint(minitem,maxitem)
+	group = []
+	for i in range(numitem):
+		ditem = genname(minwords,maxwords,minchars,maxchars, istitle)
+		group.append(ditem)
+	return ". ".join(group)+"."
+
+
+from time import gmtime, strftime
+
+if __name__ == "__main__":
+
+    	db = Database()
+	currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	'''
+	for w in range(random.randint(10, 100)):
+ 		# Data Insert into the table
+    		name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
+		name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
+		email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
+    		query = "INSERT INTO Users SET firstname = '"+str(name_1)+"', lastname = '"+str(name_2)+"', email = '"+str(email)+"', dateadd='"+currdatetime+"'"
+    		db.insert(query)
+
+	currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        for w in range(random.randint(1, 10)):
+                # Data Insert into the table
+                name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
+                name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
+                email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
+                query = "INSERT INTO Seller SET firstname = '"+str(name_1)+"', lastname = '"+str(name_2)+"', email = '"+str(email)+"', dateadd='"+currdatetime+"'"
+                db.insert(query)
+
+	select_query = "SELECT id from Seller Where 1 order by RAND() LIMIT 500"
+        cursor = db.query(select_query)
+        for (id) in cursor:
+		currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        	for w in range(random.randint(10, 50)):
+                	title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
+                	descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
+                	query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], random.randint(5,100), descr, currdatetime)
+                	db.insert(query)
+	'''
+	
+	import hashlib
+        select_query = "SELECT id from Users Where 1 order by RAND() LIMIT 1000"
+        cursor = db.query(select_query)
+        for (id) in cursor:
+		currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+		sessioncode = '{0}|{1}' . format(id['id'], strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+		m = hashlib.md5()
+		m.update(sessioncode)
+		session_code = m.hexdigest()
+		num_of_buys = random.randint(1,10)
+                for w in range(num_of_buys):
+			random_product = db.query("select id, idSeller, stock from Products where 1 and stock>=1 order by RAND() limit 0,1")
+                        for rp in random_product:
+				id_product = rp['id']
+				#print(id_product)
+			num_item_buy = random.randint(1,rp['stock'])
+			queryin = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
+			try:
+				#print(queryin)
+				db.insert(queryin)
+				db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product))
+				error = False
+			except:
+				print('error insert SessionOrders')
+				error = True
+		if error is False:
+			db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], rp['idSeller'], session_code, '', currdatetime))
+		else:
+			print('error transaction')
