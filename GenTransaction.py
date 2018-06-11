@@ -4,6 +4,8 @@ import hashlib
 
 
 if __name__ == "__main__":
+    db = Database()
+    
     # choose 1000 Users/buyers random
     select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT 1000"
     cursor = db.query(select_query)
