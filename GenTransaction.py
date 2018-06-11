@@ -50,7 +50,7 @@ def Transaction(limit=100):
                 q_insert="(idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'), " . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
                 parsial = '{0}|{1}' . format(id_product, num_item_buy)
                 groupID.append(parsial)                
-                groupQ.append=(q_insert) 
+                groupQ.append(q_insert) 
 
             group_string = "".join(groupID)
             group_stringQ = "".join(groupQ)
