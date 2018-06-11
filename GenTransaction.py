@@ -1,3 +1,4 @@
+from time import gmtime, strftime
 import hashlib
     
 # choose 1000 Users/buyers random
