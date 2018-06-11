@@ -31,6 +31,7 @@ def Transaction(limit=100):
 
                 # get id
                 groupID = []
+                groupQ = []
                 for rp in random_product:
                     id_product = rp['id']
 
