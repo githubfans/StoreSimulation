@@ -56,8 +56,9 @@ def Transaction(limit=100):
             else:
                 print('error transaction')
 
-                
-                
+
+Transaction(limit=253)
+'''                
 import thread
 import time
 
@@ -70,3 +71,4 @@ except:
 
 while 1:
     pass
+'''
