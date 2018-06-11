@@ -36,7 +36,7 @@ def Transaction(limit=100):
                     id_product = rp['id']
 
                 num_item_buy = random.randint(1,rp['stock'])
-                '''
+                
                 try:
                     db.insert("INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code))
                     db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product))
@@ -45,25 +45,7 @@ def Transaction(limit=100):
                 except:
                     print('error insert SessionOrders')
                     error = True
-                '''
                 
-                q_insert="(idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'), " . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
-                parsial = '{0}|{1}' . format(id_product, num_item_buy)
-                groupID.append(parsial)                
-                groupQ.append(q_insert) 
-
-            group_string = "".join(groupID)
-            group_stringQ = "".join(groupQ)
-            try:
-                db.insert("INSERT INTO SessionOrders {0}" . format(group_stringQ))
-                for gpid in group_string:
-                    nstock = gpid.strip().split('|')[0]
-                    pid_ = gpid.strip().split('|')[1]
-                    db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(nstock, pid_))
-                    error = False
-            except:
-                print('error insert transaction.')
-                error = True
             if error is False:
                 try:
                     nt += 1
@@ -71,8 +53,8 @@ def Transaction(limit=100):
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
                 except:
                     # roll back
-                    #db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
-                    #db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
+                    db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
+                    db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction')
             else:
                 print('error transaction')
