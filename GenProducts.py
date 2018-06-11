@@ -16,7 +16,7 @@ if __name__ == "__main__":
         l += 1
         print('\n{0}-----' . format(l))
         restock_or_generate = random.randint(1,4)
-        if restock_or_generate is 4:
+        if restock_or_generate is 1:
             currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             for w in range(random.randint(10, 50)):
                 title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
@@ -25,7 +25,7 @@ if __name__ == "__main__":
                 query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
                 print('{0}  Product created : {1} ({2} items)' . format(id['firstname'], title, nstock))
                 db.insert(query)
-        elif restock_or_generate is 1 or restock_or_generate is 2 or restock_or_generate is 3:
+        elif restock_or_generate is 2 or restock_or_generate is 3 or restock_or_generate is 4:
             select_query = "SELECT id, title from Products Where 1 and stock<10 and idSeller={0} order by RAND() LIMIT 100" . format(id['id'])
             cursor = db.query(select_query)
             for (Pid) in cursor:
