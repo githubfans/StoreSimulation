@@ -56,11 +56,15 @@ def Transaction(limit=100):
             else:
                 print('error transaction')
 
+                
+                
+import thread
+import time
 
 # Create two threads as follows
 try:
     thread.start_new_thread( Transaction, ( 200, ) )
-    thread.start_new_thread( print_time, ( 200, ) )
+    thread.start_new_thread( Transaction, ( 200, ) )
 except:
     print "Error: unable to start thread"
 
