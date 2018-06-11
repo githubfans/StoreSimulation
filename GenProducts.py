@@ -14,7 +14,7 @@ if __name__ == "__main__":
     l = 0
     for (id) in cursor:
         l += 1
-        restock_or_generate = random.randint(0,1)
+        restock_or_generate = random.randint(0,2)
         if restock_or_generate is 1:
             currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             for w in range(random.randint(10, 50)):
