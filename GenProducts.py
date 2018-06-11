@@ -32,3 +32,5 @@ if __name__ == "__main__":
                     num_restock = random.randint(10,50)
                     db.query("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
                     print('{0} Restock {1} + {2}' . format(l, Pid['title'], num_restock))
+                except:
+                    print('{0} Restock Fail {1} + {2}' . format(l, Pid['title'], num_restock))
