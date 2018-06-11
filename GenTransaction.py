@@ -1,4 +1,5 @@
 from Database import Database
+from Functions import genword, genname, gendesc
 from time import gmtime, strftime
 import hashlib
 import sys
