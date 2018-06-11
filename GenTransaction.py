@@ -9,7 +9,7 @@ if __name__ == "__main__":
     db = Database()
     
     # choose 1000 Users/buyers random
-    select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT 1000"
+    select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT 100"
     cursor = db.query(select_query)
     nt = 0
     for (id) in cursor:
@@ -47,8 +47,6 @@ if __name__ == "__main__":
                 nt += 1
                 db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], rp['idSeller'], session_code, '', currdatetime))
                 print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
-                # restock
-                db.insert("UPDATE Products SET stock=stock+50 WHERE stock<10" . format(num_item_buy, id_product))
             except:
                 # roll back
                 db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
