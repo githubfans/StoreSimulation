@@ -83,37 +83,43 @@ if __name__ == "__main__":
 	currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 	
 	# generate User
-	for w in range(random.randint(10, 100)):
+	g = 0
+	for w in range(random.randint(10, 50)):
  		# Data Insert into the table
-    		name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
+    		g += 1
+		name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
 		name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
 		email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
     		query = "INSERT INTO Users SET firstname = '"+str(name_1)+"', lastname = '"+str(name_2)+"', email = '"+str(email)+"', dateadd='"+currdatetime+"'"
-    		print('created : {0} {1}' . format(name_1, name_2))
+    		print('{0} User created : {1} {2}' . format(g, name_1, name_2))
 		db.insert(query)
 	
 	# generate Seller
+	g = 0
 	currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         for w in range(random.randint(1, 10)):
                 # Data Insert into the table
-                name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
+                g + = 1
+		name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
                 name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
                 email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
                 query = "INSERT INTO Seller SET firstname = '"+str(name_1)+"', lastname = '"+str(name_2)+"', email = '"+str(email)+"', dateadd='"+currdatetime+"'"
-                print('created : {0} {1}' . format(name_1, name_2))
+                print('{0} Seller created : {1} {2}' . format(g, name_1, name_2))
 		db.insert(query)
 	
 	# generate Product
-	select_query = "SELECT id from Seller Where 1 order by RAND() LIMIT 500"
+	select_query = "SELECT id, firstname from Seller Where 1 order by RAND() LIMIT 500"
         cursor = db.query(select_query)
         for (id) in cursor:
 		currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-        	for w in range(random.randint(10, 50)):
-                	title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
+        	g = 0
+		for w in range(random.randint(10, 50)):
+                	g += 1
+			title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
                 	descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
 			nstock = random.randint(5,100)
                 	query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
-                	print('created : {0} ({1} items)' . format(title, nstock))
+                	print('{0} {1}  Product created : {2} ({3} items)' . format(g, id['firstname'], title, nstock))
 			db.insert(query)
 	
 	
