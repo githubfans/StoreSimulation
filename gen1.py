@@ -111,8 +111,9 @@ if __name__ == "__main__":
         	for w in range(random.randint(10, 50)):
                 	title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
                 	descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
-                	query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], random.randint(5,100), descr, currdatetime)
-                	print('created : {0} ({1} items)' . format(title, stock))
+			nstock = random.randint(5,100)
+                	query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
+                	print('created : {0} ({1} items)' . format(title, nstock))
 			db.insert(query)
 	
 	
