@@ -99,7 +99,7 @@ if __name__ == "__main__":
 	currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         for w in range(random.randint(1, 10)):
                 # Data Insert into the table
-                g + = 1
+                g += 1
 		name_1 = genname(minwords=1,maxwords=1,minchars=3,maxchars=5)
                 name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
                 email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
