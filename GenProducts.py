@@ -16,7 +16,7 @@ if __name__ == "__main__":
         l += 1
         print('\n{0}-----' . format(l))
         restock_or_generate = random.randint(1,4)
-        if restock_or_generate is 1:
+        if restock_or_generate is 4:
             currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             for w in range(random.randint(10, 50)):
                 title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
@@ -32,6 +32,6 @@ if __name__ == "__main__":
                 try:
                     num_restock = random.randint(10,50)
                     db.query("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
-                    print('Restock {0} + {1}' . format(l, Pid['title'], num_restock))
+                    print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                 except:
-                    print('Restock Fail {0} + {1}' . format(l, Pid['title'], num_restock))
+                    print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
