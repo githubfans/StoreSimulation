@@ -9,7 +9,7 @@ if __name__ == "__main__":
     db = Database()
         
     # generate Product
-    select_query = "SELECT id, firstname from Seller Where 1 order by RAND() LIMIT 500"
+    select_query = "SELECT id, firstname from Seller Where 1 order by RAND() LIMIT 250"
     cursor = db.query(select_query)
     l = 0
     for (id) in cursor:
