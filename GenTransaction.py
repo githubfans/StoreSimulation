@@ -60,8 +60,10 @@ def Transaction(limit=100):
                     nstock = gpid.strip().split('|')[0]
                     pid_ = gpid.strip().split('|')[1]
                     db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(nstock, pid_))
+                    error = False
             except:
                 print('error insert transaction.')
+                error = True
             if error is False:
                 try:
                     nt += 1
@@ -69,8 +71,8 @@ def Transaction(limit=100):
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
                 except:
                     # roll back
-                    db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
-                    db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
+                    #db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
+                    #db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction')
             else:
                 print('error transaction')
