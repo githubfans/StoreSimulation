@@ -21,7 +21,7 @@ if __name__ == "__main__":
         
         # Users's buy 
         num_of_buys = random.randint(1,10)
-                for w in range(num_of_buys):
+        for w in range(num_of_buys):
             
             # choose 1 product random
             random_product = db.query("select p.id, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,1")
@@ -39,6 +39,7 @@ if __name__ == "__main__":
             except:
                 print('error insert SessionOrders')
                 error = True
+        
         if error is False:
             try:
                 nt += 1
