@@ -1,4 +1,5 @@
 from Database import Database
+from Functions import .
 from time import gmtime, strftime
 import sys
 import random
