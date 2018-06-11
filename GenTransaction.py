@@ -1,7 +1,8 @@
 from Database import Database
 from time import gmtime, strftime
 import hashlib
-
+import sys
+import random
 
 if __name__ == "__main__":
     db = Database()
