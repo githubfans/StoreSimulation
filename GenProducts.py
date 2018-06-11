@@ -15,7 +15,7 @@ if __name__ == "__main__":
     for (id) in cursor:
         l += 1
         restock_or_generate = random.randint(0,1)
-        if restock_or_generate is 0:
+        if restock_or_generate is 1:
             currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             for w in range(random.randint(10, 50)):
                 title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
