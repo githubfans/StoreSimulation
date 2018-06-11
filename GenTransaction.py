@@ -30,10 +30,12 @@ def Transaction(limit=100):
                 random_product = db.query("select p.id, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,1")
 
                 # get id
+                groupID = []
                 for rp in random_product:
                     id_product = rp['id']
 
                 num_item_buy = random.randint(1,rp['stock'])
+                '''
                 try:
                     db.insert("INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code))
                     db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product))
@@ -42,7 +44,23 @@ def Transaction(limit=100):
                 except:
                     print('error insert SessionOrders')
                     error = True
+                '''
+                
+                q_insert="(idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'), " . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
+                parsial = '{0}|{1}' . format(id_product, num_item_buy)
+                groupID.append(parsial)                
+                groupQ.append=(q_insert) 
 
+            group_string = "".join(groupID)
+            group_stringQ = "".join(groupQ)
+            try:
+                db.insert("INSERT INTO SessionOrders {0}" . format(group_stringQ))
+                for gpid in group_string:
+                    nstock = gpid.strip().split('|')[0]
+                    pid_ = gpid.strip().split('|')[1]
+                    db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(nstock, pid_))
+            except:
+                print('error insert transaction.')
             if error is False:
                 try:
                     nt += 1
