@@ -115,7 +115,8 @@ if __name__ == "__main__":
 	# choose 1000 Users/buyers random
 	select_query = "SELECT id from Users Where 1 order by RAND() LIMIT 1000"
         cursor = db.query(select_query)
-        for (id) in cursor:
+        nt = 0
+	for (id) in cursor:
 		currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 		
 		# md5 for session code = receipt code
@@ -146,8 +147,9 @@ if __name__ == "__main__":
 				error = True
 		if error is False:
 			try:
+				nt += 1
 				db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], rp['idSeller'], session_code, '', currdatetime))
-				print('Transaction : {0} successfully' . format(session_code))
+				print('{0} Transaction : {1} successfully' . format(nt, session_code))
 			except:
 				# roll back
 				db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
