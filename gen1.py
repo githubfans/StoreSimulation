@@ -89,7 +89,8 @@ if __name__ == "__main__":
 		name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
 		email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
     		query = "INSERT INTO Users SET firstname = '"+str(name_1)+"', lastname = '"+str(name_2)+"', email = '"+str(email)+"', dateadd='"+currdatetime+"'"
-    		db.insert(query)
+    		print('created : {0} {1}' . format(name_1, name_2))
+		db.insert(query)
 	
 	# generate Seller
 	currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -99,7 +100,8 @@ if __name__ == "__main__":
                 name_2 = genname(minwords=1,maxwords=2,minchars=3,maxchars=5)
                 email  = '{0}@{1}.com' . format(name_1, genword(minchars=5,maxchars=10, istitle=0))
                 query = "INSERT INTO Seller SET firstname = '"+str(name_1)+"', lastname = '"+str(name_2)+"', email = '"+str(email)+"', dateadd='"+currdatetime+"'"
-                db.insert(query)
+                print('created : {0} {1}' . format(name_1, name_2))
+		db.insert(query)
 	
 	# generate Product
 	select_query = "SELECT id from Seller Where 1 order by RAND() LIMIT 500"
@@ -110,7 +112,8 @@ if __name__ == "__main__":
                 	title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
                 	descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
                 	query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], random.randint(5,100), descr, currdatetime)
-                	db.insert(query)
+                	print('created : {0} ({1} items)' . format(title, stock))
+			db.insert(query)
 	
 	
 	import hashlib
