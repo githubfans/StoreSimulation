@@ -55,3 +55,14 @@ def Transaction(limit=100):
                     print('error transaction')
             else:
                 print('error transaction')
+
+
+# Create two threads as follows
+try:
+    thread.start_new_thread( Transaction, ( 200, ) )
+    thread.start_new_thread( print_time, ( 200, ) )
+except:
+    print "Error: unable to start thread"
+
+while 1:
+    pass
