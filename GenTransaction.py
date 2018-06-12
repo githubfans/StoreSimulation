@@ -37,15 +37,15 @@ def Transaction(limit=100):
 		qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
                 print(qupdate)
                 try:
-                    #db.insert(qinsert)
-                    #db.insert(qupdate)
-                    #print('{0} buy {1} ({2} items)' . format(id['UName'], rp['title'], num_item_buy))
+                    db.insert(qinsert)
+                    db.insert(qupdate)
+                    print('{0} buy {1} ({2} items)' . format(id['UName'], rp['title'], num_item_buy))
                     error = False
                 except:
                     print('error insert SessionOrders')
                     error = True
                 
-            '''    
+            
             if error is False:
                 try:
                     nt += 1
@@ -58,7 +58,7 @@ def Transaction(limit=100):
                     print('error transaction')
             else:
                 print('error transaction')
-            '''
+            
 '''
 import time
 timeout = time.time() + 60*5   # 5 minutes from now
