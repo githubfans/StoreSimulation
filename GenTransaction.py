@@ -58,7 +58,7 @@ def Transaction(limit=100):
                     print('error transaction')
             else:
                 print('error transaction')
-
+'''
 import time
 timeout = time.time() + 60*5   # 5 minutes from now
 while True:
@@ -67,7 +67,15 @@ while True:
     if test == 5 or time.time() > timeout:
         break
     test = test - 1
-'''                
+'''
+import cv2
+while True:
+    k = cv2.waitKey(1) & 0xFF
+    Transaction(limit=10)
+    # press 'q' to exit
+    if k == ord('q'):
+        break
+'''
 import thread
 import time
 
