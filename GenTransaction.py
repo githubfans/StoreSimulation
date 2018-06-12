@@ -68,6 +68,7 @@ while True:
         break
     test = test - 1
 '''
+'''
 import cv2
 while True:
     k = cv2.waitKey(1) & 0xFF
@@ -75,6 +76,12 @@ while True:
     # press 'q' to exit
     if k == ord('q'):
         break
+'''
+try:
+    while True:
+        Transaction(limit=1)
+except KeyboardInterrupt:
+    pass # do cleanup here
 '''
 import thread
 import time
