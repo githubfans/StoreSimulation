@@ -26,15 +26,17 @@ def Transaction(limit=100):
             num_of_products = random.randint(1,20)
             # choose n product random
             random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,{0}" . format(num_of_products))
-
+			cc=0
             for w in random_product:
-                
                 id_product = w['idpro']
-                num_item_buy = random.randint(1,w['stock'])
-                #print('{0} - {1}' . format(id_product, num_item_buy))
+				pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
+                for st in pstock:
+		    		pstock_ = st['stock']
+				num_item_buy = random.randint(1,pstock)
+				#print('{0} - {1}' . format(id_product, num_item_buy))
                 qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
                 #print(qinsert)
-		qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
+				qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
                 #print(qupdate)
                 try:
                     db.insert(qinsert)
