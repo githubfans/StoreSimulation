@@ -23,16 +23,13 @@ def Transaction(limit=100):
             session_code = m.hexdigest()
 
             # Users's buy 
-            num_of_buys = random.randint(1,20)
-            for w in range(num_of_buys):
+            num_of_products = random.randint(1,20)
+            # choose n product random
+            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,{0}" . format(num_of_products))
 
-                # choose 1 product random
-                random_product = db.query("select p.id, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,1")
-
-                # get id
-                for rp in random_product:
-                    id_product = rp['id']
-
+            for w in random_product:
+                
+                id_product = w['idpro']
                 num_item_buy = random.randint(1,rp['stock'])
                 
                 try:
