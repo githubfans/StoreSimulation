@@ -41,7 +41,8 @@ def Transaction(limit=100):
                     db.insert(qupdate)
                     print('{0} buy {1} ({2} items)' . format(id['UName'], rp['title'], num_item_buy))
                     error = False
-                except:
+                except TypeError as e:
+		    print(e):
                     print('error insert SessionOrders')
                     error = True
                 
