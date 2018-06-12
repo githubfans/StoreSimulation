@@ -59,8 +59,14 @@ def Transaction(limit=100):
             else:
                 print('error transaction')
 
-
-Transaction(limit=253)
+import time
+timeout = time.time() + 60*5   # 5 minutes from now
+while True:
+    test = 0
+    Transaction(limit=10)
+    if test == 5 or time.time() > timeout:
+        break
+    test = test - 1
 '''                
 import thread
 import time
