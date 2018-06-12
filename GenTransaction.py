@@ -41,7 +41,7 @@ def Transaction(limit=100):
                     db.insert(qupdate)
                     print('{0} buy {1} ({2} items)' . format(id['UName'], w['title'], num_item_buy))
                     error = False
-                except TypeError as e:
+                except (MySQLdb.Error, MySQLdb.Warning) as e:
 		    print(e)
                     print('error insert SessionOrders')
                     error = True
