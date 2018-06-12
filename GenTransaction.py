@@ -31,7 +31,8 @@ def Transaction(limit=100):
                 
                 id_product = w['idpro']
                 num_item_buy = random.randint(1,w['stock'])
-                
+                print('{0}{1}' . format(id_product, num_item_buy))
+                '''
                 try:
                     db.insert("INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code))
                     db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product))
@@ -40,7 +41,8 @@ def Transaction(limit=100):
                 except:
                     print('error insert SessionOrders')
                     error = True
-                
+                '''
+            '''    
             if error is False:
                 try:
                     nt += 1
@@ -53,6 +55,7 @@ def Transaction(limit=100):
                     print('error transaction')
             else:
                 print('error transaction')
+            '''
 '''
 import time
 timeout = time.time() + 60*5   # 5 minutes from now
