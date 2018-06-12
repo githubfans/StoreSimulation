@@ -39,7 +39,7 @@ def Transaction(limit=100):
                 try:
                     db.insert(qinsert)
                     db.insert(qupdate)
-                    print('{0} buy {1} ({2} items)' . format(id['UName'], rp['title'], num_item_buy))
+                    print('{0} buy {1} ({2} items)' . format(id['UName'], w['title'], num_item_buy))
                     error = False
                 except TypeError as e:
 		    print(e)
