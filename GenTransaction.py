@@ -31,10 +31,12 @@ def Transaction(limit=100):
                 
                 id_product = w['idpro']
                 num_item_buy = random.randint(1,w['stock'])
-                print('{0}{1}' . format(id_product, num_item_buy))
+                print('{0} - {1}' . format(id_product, num_item_buy))
+                qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
+                print(qinsert)
                 '''
                 try:
-                    db.insert("INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code))
+                    db.insert()
                     db.insert("UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('{0} buy {1} ({2} items)' . format(id['UName'], rp['title'], num_item_buy))
                     error = False
