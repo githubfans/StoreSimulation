@@ -32,7 +32,7 @@ def Transaction(limit=100):
 				pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
                 for st in pstock:
 		    		pstock_ = st['stock']
-				num_item_buy = random.randint(1,pstock)
+				num_item_buy = random.randint(1,pstock_)
 				#print('{0} - {1}' . format(id_product, num_item_buy))
                 qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
                 #print(qinsert)
