@@ -47,8 +47,8 @@ def Transaction(limit=100):
                         print('error insert SessionOrders')
                         error = True
                 else:
-                    error = true
-                    print('Stock = 0')
+                    error = True
+                    print('Stock = 0 _____________________________')
             
             if error is False:
                 try:
