@@ -33,7 +33,7 @@ def Transaction(limit=100):
                 for st in pstock:
                     pstock_ = st['stock']
                 num_item_buy = random.randint(1,pstock_)
-                diff_after_buy = num_item_buy - pstock_ 
+                diff_after_buy = pstock_ - num_item_buy 
                 if diff_after_buy >= 0:
                     #print('{0} - {1}' . format(id_product, num_item_buy))
                     qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
