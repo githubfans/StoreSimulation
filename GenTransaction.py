@@ -33,35 +33,35 @@ def Transaction(limit=100):
                     pstock_ = st['stock']
                 if pstock_ >= 1:
                     num_item_buy = random.randint(1,pstock_)
-                    #print('{0} - {1}' . format(id_product, num_item_buy))
-                    qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
-                    #print(qinsert)
-                    qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
-                    #print(qupdate)
-                    try:
-                        db.insert(qinsert)
-                        db.insert(qupdate)
-                        print('{0} buy {1} ({2} items)' . format(id['UName'], w['title'], num_item_buy))
-                        error = False
-                    except:
-                        print('error insert SessionOrders')
-                        error = True
+                    diff_after_buy = num_item_buy - pstock_ 
+                    if diff_after_buy >= 0:
+                        #print('{0} - {1}' . format(id_product, num_item_buy))
+                        qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
+                        #print(qinsert)
+                        qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
+                        #print(qupdate)
+                        try:
+                            db.insert(qinsert)
+                            db.insert(qupdate)
+                            print('{0} buy {1} ({2} items)' . format(id['UName'], w['title'], num_item_buy))
+                        except:
+                            print('error insert SessionOrders')
+                            pass
+                    else:
+                        pass
                 else:
-                    error = True
+                    pass
                     print('Stock = 0 _____________________________')
             
-            if error is False:
-                try:
-                    nt += 1
-                    db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
-                    print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
-                except:
-                    # roll back
-                    db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
-                    db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
-                    print('error transaction')
-            else:
-                print('error transaction')
+            try:
+                nt += 1
+                db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
+                print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
+            except:
+                # roll back
+                db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
+                db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
+                print('error transaction.. rollback done..')
             
 '''
 import time
