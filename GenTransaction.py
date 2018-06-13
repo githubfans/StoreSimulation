@@ -26,6 +26,7 @@ def Transaction(limit=100):
             num_of_products = random.randint(1,20)
             # choose n product random
             random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,{0}" . format(num_of_products))
+            ntrx = 0
             for w in random_product:
                 id_product = w['idpro']
                 pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
@@ -43,15 +44,10 @@ def Transaction(limit=100):
                         db.insert(qinsert)
                         db.insert(qupdate)
                         print('{0} buy {1} ({2} items)' . format(id['UName'], w['title'], num_item_buy))
-                        trx = True
+                        ntrx += 1
                     except:
-                        print('error insert SessionOrders')
-                        trx = False
-                        pass
-                else:
-                    pass
-            
-            if trx = True
+                        print('error insert SessionOrders')            
+            if ntrx > 0:
                 try:
                     nt += 1
                     db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
@@ -61,9 +57,6 @@ def Transaction(limit=100):
                     db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
-            else:
-                print('Order Pass..')
-            
 '''
 import time
 timeout = time.time() + 60*5   # 5 minutes from now
