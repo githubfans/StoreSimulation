@@ -27,7 +27,7 @@ def GenProducts(limit=100):
                     descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
                     nstock = random.randint(5,20)
                     check_title = db.query("SELECT COUNT(title) FROM Products WHERE 1 AND title='{0}'" . format(title))
-                    if check_title = 0:
+                    if check_title < 1:
                         query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
                         print('{0}  Product created : {1} ({2} items)' . format(id['firstname'], title, nstock))
                         db.insert(query)
