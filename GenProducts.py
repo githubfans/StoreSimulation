@@ -15,7 +15,7 @@ def GenProducts(limit=100):
         l = 0
         for (id) in cursor:
             l += 1
-            print('\n{0}-----' . format(l))
+            #print('\n{0}-----' . format(l))
             restock_or_generate = random.randint(1,5)
 
             # new products
@@ -38,7 +38,7 @@ def GenProducts(limit=100):
                 for (Pid) in cursor:
                     try:
                         num_restock = random.randint(1,20)
-                        db.query("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
+                        db.insert("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
                         print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                     except:
                         print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
