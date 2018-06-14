@@ -33,11 +33,11 @@ def GenProducts(limit=100):
                         db.insert(query)
             
             elif restock_or_generate > 1:
-                select_query = "SELECT id, title from Products Where 1 and stock<10 and idSeller={0} order by RAND() LIMIT 500" . format(id['id'])
+                select_query = "SELECT id, title from Products Where 1 and stock<10 and idSeller={0} order by RAND() LIMIT 200" . format(id['id'])
                 cursor = db.query(select_query)
                 for (Pid) in cursor:
                     try:
-                        num_restock = random.randint(1,20)
+                        num_restock = random.randint(1,10)
                         db.insert("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
                         print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                     except:
