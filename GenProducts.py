@@ -3,6 +3,7 @@ from Functions import genword, genname, gendesc
 from time import gmtime, strftime
 import sys
 import random
+import time
 
 def GenProducts(limit=100):
     if __name__ == "__main__":
