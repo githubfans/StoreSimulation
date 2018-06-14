@@ -4,12 +4,12 @@ from time import gmtime, strftime
 import sys
 import random
 
-def Transaction(limit=100):
+def GenProducts(limit=100):
     if __name__ == "__main__":
         db = Database()
         
         # generate Product
-        select_query = "SELECT id, firstname from Seller Where 1 order by RAND() LIMIT 250"
+        select_query = "SELECT id, firstname from Seller Where 1 order by RAND() LIMIT {0}" . format(limit)
         cursor = db.query(select_query)
         l = 0
         for (id) in cursor:
@@ -41,6 +41,6 @@ def Transaction(limit=100):
                         
 try:
     while True:
-        Transaction(limit=1)
+        GenProducts(limit=1)
 except KeyboardInterrupt:
     break # do cleanup here
