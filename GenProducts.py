@@ -37,7 +37,7 @@ def GenProducts(limit=100):
                 cursor = db.query(select_query)
                 for (Pid) in cursor:
                     try:
-                        num_restock = random.randint(1,10)
+                        num_restock = random.randint(1,5)
                         db.insert("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
                         print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                     except:
