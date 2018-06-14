@@ -46,4 +46,4 @@ try:
         GenProducts(limit=1)
         sleep(1)
 except KeyboardInterrupt:
-    break # do cleanup here
+    pass # do cleanup here
