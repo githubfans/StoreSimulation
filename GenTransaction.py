@@ -34,7 +34,7 @@ def Transaction(limit=100):
                 pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
                 for st in pstock:
                     pstock_ = st['stock']
-                if pstock_ > 0:
+                if pstock_ >= 1:
                     num_item_buy = random.randint(1,pstock_)
                     sum_num_item_buy += num_item_buy
                     diff_after_buy = pstock_ - num_item_buy 
