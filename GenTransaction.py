@@ -27,6 +27,8 @@ def Transaction(limit=100):
             # choose n product random
             random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=1 order by RAND() limit 0,{0}" . format(num_of_products))
             ntrx = 0
+            num_item_buy = 0
+            sum_num_item_buy = 0
             for w in random_product:
                 id_product = w['idpro']
                 pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
@@ -34,6 +36,7 @@ def Transaction(limit=100):
                     pstock_ = st['stock']
                 if pstock_ > 0:
                     num_item_buy = random.randint(1,pstock_)
+                    sum_num_item_buy += num_item_buy
                     diff_after_buy = pstock_ - num_item_buy 
                     if diff_after_buy >= 0:
                         #print('{0} - {1}' . format(id_product, num_item_buy))
@@ -52,6 +55,7 @@ def Transaction(limit=100):
                 try:
                     nt += 1
                     db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
+                    print('total items = {0}' . format(num_item_buy))
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
                 except:
                     # roll back
