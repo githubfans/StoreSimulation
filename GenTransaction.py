@@ -55,7 +55,7 @@ def Transaction(limit=100):
                 try:
                     nt += 1
                     db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
-                    print('total items = {0}' . format(num_item_buy))
+                    print('total items = {0}' . format(sum_num_item_buy))
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
                 except:
                     # roll back
