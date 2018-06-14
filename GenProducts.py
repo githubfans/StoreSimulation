@@ -26,9 +26,11 @@ def GenProducts(limit=100):
                     title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
                     descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
                     nstock = random.randint(5,20)
-                    query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
-                    print('{0}  Product created : {1} ({2} items)' . format(id['firstname'], title, nstock))
-                    db.insert(query)
+                    check_title = db.query("SELECT COUNT(title) FROM Products WHERE 1 AND title='{0}'" . format(title))
+                    if check_title = 0:
+                        query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
+                        print('{0}  Product created : {1} ({2} items)' . format(id['firstname'], title, nstock))
+                        db.insert(query)
             
             elif restock_or_generate > 1:
                 select_query = "SELECT id, title from Products Where 1 and stock<10 and idSeller={0} order by RAND() LIMIT 500" . format(id['id'])
