@@ -44,5 +44,6 @@ def GenProducts(limit=100):
 try:
     while True:
         GenProducts(limit=1)
+        sleep(1)
 except KeyboardInterrupt:
     break # do cleanup here
