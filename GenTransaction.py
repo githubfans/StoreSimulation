@@ -44,10 +44,11 @@ def Transaction(limit=100):
                         #print(qinsert)
                         qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
                         #print(qupdate)
+                        buyer_name = id['UName']
                         try:
                             db.insert(qinsert)
                             db.insert(qupdate)
-                            print('{0} buy {1} ({2} items)' . format(id['UName'], w['title'], num_item_buy))
+                            #print('{0} buy {1} ({2} items)' . format(buyer_name, w['title'], num_item_buy))
                             ntrx += 1
                         except:
                             print('error insert SessionOrders')            
@@ -55,7 +56,7 @@ def Transaction(limit=100):
                 try:
                     nt += 1
                     db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
-                    print('total items = {0}' . format(sum_num_item_buy))
+                    print('User :{0}, total items = {1}' . format(buyer_name, sum_num_item_buy))
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
                 except:
                     # roll back
