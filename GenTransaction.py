@@ -25,7 +25,7 @@ def Transaction(limit=100):
             # Users's buy 
             num_of_products = random.randint(1,20)
             # choose n product random
-            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=10 AND in_use='n' order by RAND() limit 0,{0}" . format(num_of_products))
+            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=10 AND p.in_use='n' order by RAND() limit 0,{0}" . format(num_of_products))
             
             for w in random_product:
                 id_product = w['idpro']
