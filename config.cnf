@@ -1,5 +1,6 @@
 gentrx_limit=1;
-gentrx_buy_numpro=10;
+gentrx_buy_numpro_min=1;
+gentrx_buy_numpro_max=10;
 
 genpro_limit=1;
 genpro_restockprobability=20;
