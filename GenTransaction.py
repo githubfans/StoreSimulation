@@ -64,6 +64,11 @@ def Transaction(limit=100):
                     db.insert("INSERT INTO Transaction SET idUser={0}, idSeller={1}, idSession='{2}', description='{3}', dateadd='{4}'" . format(id['id'], w['idSeller'], session_code, '', currdatetime))
                     print('User :{0}, total items = {1}' . format(buyer_name, sum_num_item_buy))
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
+            
+                    for w in random_product:
+                        id_product = w['idpro']
+                        # unlock this product from other transaction
+                        qupdate = "UPDATE Products SET in_use='n' WHERE id={0} AND in_use='y'" . format(id_product)
                 except:
                     # roll back
                     db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
