@@ -6,7 +6,7 @@ class Database:
     host = 'localhost'
     user = 'aji'
     password = '1234567!'
-    db = 'wikigen'
+    db = 'demotrx'
 
     def __init__(self):
         self.connection = MySQLdb.connect(self.host, self.user, self.password, self.db)
