@@ -4,7 +4,9 @@ gentrx_buy_numpro=10;
 genpro_limit=1;
 genpro_restockprobability=20;
 genpro_nstock_min=1;
-genpro_nstock_max=5;
+genpro_nstock_max=2;
+genpro_numnewpro_min=1;
+genpro_numnewpro_max=5;
 
 genuser_limit=1;
 genseller_limit=1;
