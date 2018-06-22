@@ -47,7 +47,7 @@ def Transaction(limit=100):
                     diff_after_buy = pstock_ - num_item_buy 
                     if diff_after_buy >= 0:
                         #print('{0} - {1}' . format(id_product, num_item_buy))
-                        qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', SessCode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
+                        qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', sessioncode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
                         #print(qinsert)
                         qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
                         #print(qupdate)
