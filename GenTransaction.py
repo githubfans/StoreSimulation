@@ -70,6 +70,7 @@ def Transaction(limit=100):
                         id_product = w['idpro']
                         # unlock this product from other transaction
                         qupdate = "UPDATE Products SET in_use='n' WHERE id={0} AND in_use='y'" . format(id_product)
+                        db.insert(qupdate)
                 except:
                     # roll back
                     db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
