@@ -3,4 +3,4 @@ genpro_limit=1;
 genuser_limit=1;
 genseller_limit=1;
 
-gentrx_buy_numpro=10;
+gentrx_buy_numpro=35;
