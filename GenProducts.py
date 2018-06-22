@@ -15,7 +15,7 @@ def GenProducts(limit=100):
         l = 0
         for (id) in cursor:
             l += 1
-            #print('\n{0}-----' . format(l))
+            print('\n{0}-----' . format(l))
             restock_or_generate = random.randint(1,5)
 
             # new products
@@ -47,6 +47,6 @@ def GenProducts(limit=100):
 try:
     while True:
         GenProducts(limit=1)
-        time.sleep(1)
+        #time.sleep(1)
 except KeyboardInterrupt:
     pass # do cleanup here
