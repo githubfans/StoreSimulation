@@ -31,6 +31,7 @@ def Transaction(limit=100):
                 id_product = w['idpro']
                 # lock this product from other transaction
                 qupdate = "UPDATE Products SET in_use='y' WHERE id={0} AND in_use='n'" . format(id_product)
+                db.insert(qupdate)
             
             ntrx = 0
             num_item_buy = 0
