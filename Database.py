@@ -4,7 +4,7 @@ import MySQLdb
 class Database:
 
     host = 'localhost'
-    user = 'aji'
+    user = 'aji2'
     password = '1234567!'
     db = 'demotrx'
 
