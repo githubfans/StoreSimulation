@@ -5,6 +5,7 @@ import sys
 import random
 import time
 
+
 def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2, min_nstock=1, max_nstock=5):
     if __name__ == "__main__":
         db = Database()
@@ -50,7 +51,7 @@ try:
         config = f.read()
         f.close()
         
-        genpro_limitx = config.strip().split('gentrx_limit=')[1]
+        genpro_limitx = config.strip().split('genpro_limit=')[1]
         genpro_limit = int(genpro_limitx.strip().split(';')[0])
         print('genpro_limit = {0}' . format(genpro_limit))
         
