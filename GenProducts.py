@@ -25,7 +25,7 @@ def GenProducts(limit=1, restockprobability=5, min_nstock=1, max_nstock=5):
                 for w in range(random.randint(1, 10)):
                     title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
                     descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
-                    nstock = random.randint(5,20)
+                    nstock = random.randint(min_nstock,max_nstock)
                     check_title = db.insert("SELECT COUNT(title) FROM Products WHERE 1 AND title='{0}'" . format(title))
                     if check_title < 1:
                         query = "INSERT INTO Products SET title = '{0}', idSeller = {1}, stock = {2}, description = '{3}', dateadd='{4}'" . format(title, id['id'], nstock, descr, currdatetime)
@@ -37,7 +37,7 @@ def GenProducts(limit=1, restockprobability=5, min_nstock=1, max_nstock=5):
                 cursor = db.query(select_query)
                 for (Pid) in cursor:
                     try:
-                        num_restock = random.randint(1,5)
+                        num_restock = random.randint(min_nstock,max_nstock)
                         db.insert("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
                         print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                     except:
