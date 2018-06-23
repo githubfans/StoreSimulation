@@ -5,7 +5,7 @@ gentrx_buy_numpro_max=22;
 gentrx_stock_requirement=1;
 
 genpro_limit=0; ... 0 = pause
-genpro_sleep=3;
+genpro_sleep=5;
 genpro_restockprobability=100;
 genpro_nstock_min=2;
 genpro_nstock_max=10;
