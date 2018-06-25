@@ -12,7 +12,7 @@ def Transaction(limit=100):
         config = f.read()
         f.close()
         gentrx_buy_numprox = config.strip().split('gentrx_buy_numpro=')[1]
-        gentrx_buy_numpro = gentrx_buy_numprox.strip().split(';')[0]
+        gentrx_buy_numpro = int(gentrx_buy_numprox.strip().split(';')[0])
         
         # choose n Users/buyers random
         select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT {0}" . format(limit)
@@ -28,7 +28,10 @@ def Transaction(limit=100):
             session_code = m.hexdigest()
 
             # Users's buy 
-            num_of_products = random.randint(1,gentrx_buy_numpro)
+            if gentrx_buy_numpro >= 1:
+                num_of_products = random.randint(1,gentrx_buy_numpro)
+            else:
+                num_of_products = random.randint(1,20)
             # choose n product random
             random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=10 AND p.in_use='n' order by RAND() limit 0,{0}" . format(num_of_products))
             
