@@ -53,7 +53,7 @@ try:
         
         genpro_limitx = config.strip().split('genpro_limit=')[1]
         genpro_limit = int(genpro_limitx.strip().split(';')[0])
-        print('genpro_limit = {0}' . format(genpro_limit))
+        #print('genpro_limit = {0}' . format(genpro_limit))
         
         if genpro_limit >= 1 :
         
