@@ -5,7 +5,7 @@ import sys
 import random
 import time
 
-def GenProducts(limit=1, restockprobability=5):
+def GenProducts(limit=1, restockprobability=5, min_nstock=1, max_nstock=5):
     if __name__ == "__main__":
         db = Database()
         
@@ -56,8 +56,13 @@ try:
         # probability = 5 >> 1 for new product and 5 for restock 
         genpro_restockprobabilityx = config.strip().split('genpro_restockprobability=')[1]
         genpro_restockprobability = int(genpro_restockprobabilityx.strip().split(';')[0])
+        
+        genpro_nstock_minx = config.strip().split('genpro_nstock_min=')[1]
+        genpro_nstock_min = int(genpro_nstock_minx.strip().split(';')[0])
+        genpro_nstock_maxx = config.strip().split('genpro_nstock_max=')[1]
+        genpro_nstock_max = int(genpro_nstock_maxx.strip().split(';')[0])
         if genpro_limit >= 1 :
-            GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability)
+            GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
             #time.sleep(1)
         else:
             pass
