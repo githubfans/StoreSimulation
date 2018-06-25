@@ -5,7 +5,7 @@ import hashlib
 import sys
 import random
 
-def Transaction(limit=1, maxbuy_numpro=10):
+def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10):
     if __name__ == "__main__":
         db = Database()
         
@@ -23,10 +23,8 @@ def Transaction(limit=1, maxbuy_numpro=10):
             session_code = m.hexdigest()
 
             # Users's buy 
-            if maxbuy_numpro >= 1:
-                num_of_products = random.randint(1,maxbuy_numpro)
-            else:
-                num_of_products = random.randint(1,20)
+            num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
+
             # choose n product random
             random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=10 AND p.in_use='n' order by RAND() limit 0,{0}" . format(num_of_products))
             
@@ -108,10 +106,12 @@ try:
         gentrx_limit = int(gentrx_limitx.strip().split(';')[0])
         if gentrx_limit >= 1 :
             print('gentrx_limit = {0}' . format(gentrx_limit))
-            gentrx_buy_numprox = config.strip().split('gentrx_buy_numpro=')[1]
-            gentrx_buy_numpro = int(gentrx_buy_numprox.strip().split(';')[0])
-            print('gentrx_buy_numpro = {0}' . format(gentrx_buy_numpro))
-            Transaction(limit=gentrx_limit, maxbuy_numpro=gentrx_buy_numpro)
+            gentrx_buy_numpro_minx = config.strip().split('gentrx_buy_numpro_min=')[1]
+            gentrx_buy_numpro_min = int(gentrx_buy_numpro_minx.strip().split(';')[0])
+            gentrx_buy_numpro_maxx = config.strip().split('gentrx_buy_numpro_max=')[1]
+            gentrx_buy_numpro_max = int(gentrx_buy_numpro_maxx.strip().split(';')[0])
+            print('gentrx_buy_numpro_min = {0} | gentrx_buy_numpro_max = {1}' . format(gentrx_buy_numpro_min, gentrx_buy_numpro_max))
+            Transaction(limit=gentrx_limit, minbuy_numpro=gentrx_buy_numpro_min, maxbuy_numpro=gentrx_buy_numpro_max)
         else:
             pass
 except KeyboardInterrupt:
