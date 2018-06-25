@@ -5,15 +5,9 @@ import hashlib
 import sys
 import random
 
-def Transaction(limit=100):
+def Transaction(limit=1, maxbuy_numpro=10):
     if __name__ == "__main__":
         db = Database()
-        f = open("config.cnf","r")
-        config = f.read()
-        f.close()
-        gentrx_buy_numprox = config.strip().split('gentrx_buy_numpro=')[1]
-        gentrx_buy_numpro = int(gentrx_buy_numprox.strip().split(';')[0])
-        print('gentrx_buy_numpro = {0}' . format(gentrx_buy_numpro))
         
         # choose n Users/buyers random
         select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT {0}" . format(limit)
@@ -29,8 +23,8 @@ def Transaction(limit=100):
             session_code = m.hexdigest()
 
             # Users's buy 
-            if gentrx_buy_numpro >= 1:
-                num_of_products = random.randint(1,gentrx_buy_numpro)
+            if maxbuy_numpro >= 1:
+                num_of_products = random.randint(1,maxbuy_numpro)
             else:
                 num_of_products = random.randint(1,20)
             # choose n product random
@@ -106,7 +100,20 @@ while True:
 '''
 try:
     while True:
-        Transaction(limit=1)
+        f = open("config.cnf","r")
+        config = f.read()
+        f.close()
+        
+        gentrx_limitx = config.strip().split('gentrx_buy_numpro=')[1]
+        gentrx_limit = int(gentrx_limitx.strip().split(';')[0])
+        if gentrx_limit >= 1 :
+            print('gentrx_limit = {0}' . format(gentrx_limit))
+            gentrx_buy_numprox = config.strip().split('gentrx_buy_numpro=')[1]
+            gentrx_buy_numpro = int(gentrx_buy_numprox.strip().split(';')[0])
+            print('gentrx_buy_numpro = {0}' . format(gentrx_buy_numpro))
+            Transaction(limit=gentrx_limit, maxbuy_numpro=gentrx_buy_numpro)
+        else:
+            pass
 except KeyboardInterrupt:
     pass # do cleanup here
 '''
