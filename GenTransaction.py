@@ -104,7 +104,7 @@ try:
         config = f.read()
         f.close()
         
-        gentrx_limitx = config.strip().split('gentrx_buy_numpro=')[1]
+        gentrx_limitx = config.strip().split('gentrx_limit=')[1]
         gentrx_limit = int(gentrx_limitx.strip().split(';')[0])
         if gentrx_limit >= 1 :
             print('gentrx_limit = {0}' . format(gentrx_limit))
