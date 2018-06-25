@@ -11,8 +11,8 @@ def Transaction(limit=100):
         f = open("config.cnf","r")
         config = f.read()
         f.close()
-        gentrx_buy_numprox = config.strip().split('gentrx_buy_numpro=')['1']
-        gentrx_buy_numpro = gentrx_buy_numprox.strip().split(';')['0']
+        gentrx_buy_numprox = config.strip().split('gentrx_buy_numpro=')[1]
+        gentrx_buy_numpro = gentrx_buy_numprox.strip().split(';')[0]
         
         # choose n Users/buyers random
         select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT {0}" . format(limit)
