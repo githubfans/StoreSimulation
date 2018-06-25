@@ -5,7 +5,7 @@ import sys
 import random
 import time
 
-def GenProducts(limit=1, restockprobability=5, min_nstock=1, max_nstock=5):
+def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2, min_nstock=1, max_nstock=5):
     if __name__ == "__main__":
         db = Database()
         
@@ -22,7 +22,7 @@ def GenProducts(limit=1, restockprobability=5, min_nstock=1, max_nstock=5):
             if restock_or_generate is 1:
                 currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
                 # how many Product
-                for w in range(random.randint(1, 10)):
+                for w in range(random.randint(min_numnewpro, max_numnewpro)):
                     title = genname(minwords=1,maxwords=4,minchars=3,maxchars=5, istitle=1)
                     descr = gendesc(minitem=5, maxitem=10, minwords=5, maxwords=10, minchars=3, maxchars=7)
                     nstock = random.randint(min_nstock,max_nstock)
@@ -61,8 +61,14 @@ try:
         genpro_nstock_min = int(genpro_nstock_minx.strip().split(';')[0])
         genpro_nstock_maxx = config.strip().split('genpro_nstock_max=')[1]
         genpro_nstock_max = int(genpro_nstock_maxx.strip().split(';')[0])
+        
+        genpro_numnewpro_minx = config.strip().split('genpro_numnewpro_min=')[1]
+        genpro_numnewpro_min = int(genpro_numnewpro_minx.strip().split(';')[0])
+        
+        genpro_numnewpro_maxx = config.strip().split('genpro_numnewpro_max=')[1]
+        genpro_numnewpro_max = int(genpro_numnewpro_maxx.strip().split(';')[0])
         if genpro_limit >= 1 :
-            GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
+            GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
             #time.sleep(1)
         else:
             pass
