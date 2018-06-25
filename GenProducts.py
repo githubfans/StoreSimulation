@@ -52,25 +52,30 @@ try:
         
         genpro_limitx = config.strip().split('gentrx_limit=')[1]
         genpro_limit = int(genpro_limitx.strip().split(';')[0])
+        print('genpro_limit = {0}' . format(genpro_limit))
         
-        # probability = 5 >> 1 for new product and 5 for restock 
-        genpro_restockprobabilityx = config.strip().split('genpro_restockprobability=')[1]
-        genpro_restockprobability = int(genpro_restockprobabilityx.strip().split(';')[0])
-        
-        genpro_nstock_minx = config.strip().split('genpro_nstock_min=')[1]
-        genpro_nstock_min = int(genpro_nstock_minx.strip().split(';')[0])
-        genpro_nstock_maxx = config.strip().split('genpro_nstock_max=')[1]
-        genpro_nstock_max = int(genpro_nstock_maxx.strip().split(';')[0])
-        
-        genpro_numnewpro_minx = config.strip().split('genpro_numnewpro_min=')[1]
-        genpro_numnewpro_min = int(genpro_numnewpro_minx.strip().split(';')[0])
-        
-        genpro_numnewpro_maxx = config.strip().split('genpro_numnewpro_max=')[1]
-        genpro_numnewpro_max = int(genpro_numnewpro_maxx.strip().split(';')[0])
         if genpro_limit >= 1 :
+        
+            # probability = 5 >> 1 for new product and 5 for restock 
+            genpro_restockprobabilityx = config.strip().split('genpro_restockprobability=')[1]
+            genpro_restockprobability = int(genpro_restockprobabilityx.strip().split(';')[0])
+
+            genpro_nstock_minx = config.strip().split('genpro_nstock_min=')[1]
+            genpro_nstock_min = int(genpro_nstock_minx.strip().split(';')[0])
+            genpro_nstock_maxx = config.strip().split('genpro_nstock_max=')[1]
+            genpro_nstock_max = int(genpro_nstock_maxx.strip().split(';')[0])
+
+            genpro_numnewpro_minx = config.strip().split('genpro_numnewpro_min=')[1]
+            genpro_numnewpro_min = int(genpro_numnewpro_minx.strip().split(';')[0])
+
+            genpro_numnewpro_maxx = config.strip().split('genpro_numnewpro_max=')[1]
+            genpro_numnewpro_max = int(genpro_numnewpro_maxx.strip().split(';')[0])
+            
             GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
             #time.sleep(1)
+        
         else:
             pass
+
 except KeyboardInterrupt:
     pass # do cleanup here
