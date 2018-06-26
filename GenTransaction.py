@@ -43,7 +43,10 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10):
                 for st in pstock:
                     pstock_ = st['stock']
                 if pstock_ >= 1:
-                    num_item_buy = random.randint(1,pstock_)
+                    if pstock_ is 1:
+                        num_item_buy = 1
+                    else:    
+                        num_item_buy = random.randint(1,pstock_)
                     sum_num_item_buy += num_item_buy
                     diff_after_buy = pstock_ - num_item_buy 
                     if diff_after_buy >= 0:
