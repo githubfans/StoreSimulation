@@ -51,6 +51,9 @@ try:
         config = f.read()
         f.close()
         
+        genpro_sleepx = config.strip().split('genpro_sleep=')[1]
+        genpro_sleep = int(genpro_sleepx.strip().split(';')[0])
+        
         genpro_limitx = config.strip().split('genpro_limit=')[1]
         genpro_limit = int(genpro_limitx.strip().split(';')[0])
         #print('genpro_limit = {0}' . format(genpro_limit))
@@ -73,7 +76,8 @@ try:
             genpro_numnewpro_max = int(genpro_numnewpro_maxx.strip().split(';')[0])
             
             GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
-            #time.sleep(1)
+            if genpro_sleep >= 1:
+                time.sleep(genpro_sleep)
         
         else:
             pass
