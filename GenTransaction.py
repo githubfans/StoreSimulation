@@ -5,7 +5,7 @@ import hashlib
 import sys
 import random
 
-def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10):
+def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1):
     if __name__ == "__main__":
         db = Database()
         
@@ -26,7 +26,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10):
             num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
 
             # choose n product random
-            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>=10 AND p.in_use='n' order by RAND() limit 0,{0}" . format(num_of_products))
+            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>={0} AND p.in_use='n' order by RAND() limit 0,{1}" . format(min_stock_can_sell, num_of_products))
             
             for w in random_product:
                 id_product = w['idpro']
@@ -113,8 +113,10 @@ try:
             gentrx_buy_numpro_min = int(gentrx_buy_numpro_minx.strip().split(';')[0])
             gentrx_buy_numpro_maxx = config.strip().split('gentrx_buy_numpro_max=')[1]
             gentrx_buy_numpro_max = int(gentrx_buy_numpro_maxx.strip().split(';')[0])
-            print('gentrx_buy_numpro_min = {0} | gentrx_buy_numpro_max = {1}' . format(gentrx_buy_numpro_min, gentrx_buy_numpro_max))
-            Transaction(limit=gentrx_limit, minbuy_numpro=gentrx_buy_numpro_min, maxbuy_numpro=gentrx_buy_numpro_max)
+            gentrx_stock_requirementx = config.strip().split('gentrx_stock_requirement=')[1]
+            gentrx_stock_requirement = int(gentrx_stock_requirementx.strip().split(';')[0])
+            print('gentrx_buy_numpro_min = {0} | gentrx_buy_numpro_max = {1} | gentrx_stock_requirement = {2}' . format(gentrx_buy_numpro_min, gentrx_buy_numpro_max, gentrx_stock_requirement))
+            Transaction(limit=gentrx_limit, minbuy_numpro=gentrx_buy_numpro_min, maxbuy_numpro=gentrx_buy_numpro_max, min_stock_can_sell=gentrx_stock_requirement)
         else:
             pass
 except KeyboardInterrupt:
