@@ -34,7 +34,7 @@ def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2,
                         db.insert(query)
             
             elif restock_or_generate > 1:
-                select_query = "SELECT id, title from Products Where 1 and stock<10 and idSeller={0} order by RAND() LIMIT 200" . format(id['id'])
+                select_query = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} order by RAND() LIMIT 200" . format(id['id'])
                 cursor = db.query(select_query)
                 for (Pid) in cursor:
                     try:
