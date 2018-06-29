@@ -74,7 +74,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
                         id_product = w['idpro']
                         # unlock this product from other transaction
                         qupdate = "UPDATE Products SET in_use='' WHERE id={0}" . format(id_product)
-                        print('rezero product = {0}' . format(qupdate))
+                        # print('rezero product = {0}' . format(qupdate))
                         db.insert(qupdate)
                 except:
                     # roll back
