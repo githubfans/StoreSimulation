@@ -26,12 +26,12 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
             num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
 
             # choose n product random
-            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id where 1 and stock>={0} AND p.in_use='n' OR p.in_use='' order by RAND() limit 0,{1}" . format(min_stock_can_sell, num_of_products))
+            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id WHERE 1 and stock>={0} AND p.in_use='' order by RAND() limit 0,{1}" . format(min_stock_can_sell, num_of_products))
             
             for w in random_product:
                 id_product = w['idpro']
                 # lock this product from other transaction
-                qupdate = "UPDATE Products SET in_use='{0}' WHERE id={1} AND in_use='n' OR in_use=''" . format(session_code, id_product)
+                qupdate = "UPDATE Products SET in_use='{0}' WHERE id={1} AND in_use=''" . format(session_code, id_product)
                 db.insert(qupdate)
             
             ntrx = 0
