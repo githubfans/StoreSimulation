@@ -26,7 +26,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
             num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
 
             # choose n product random
-            random_product = db.query("select p.id idpro, idSeller, title, stock, s.firstname SName from Products p Join Seller s on p.idSeller=s.id WHERE 1 and stock>={0} AND p.in_use='' order by RAND() limit 0,{1}" . format(min_stock_can_sell, num_of_products))
+            random_product = db.query("SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND stock>={0} AND p.in_use='' ORDER BY RAND() LIMIT 0,{1}" . format(min_stock_can_sell, num_of_products))
             
             for w in random_product:
                 id_product = w['idpro']
@@ -73,7 +73,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
                     for w in random_product:
                         id_product = w['idpro']
                         # unlock this product from other transaction
-                        qupdate = "UPDATE Products SET in_use='' WHERE id={0} AND in_use='{1}'" . format(id_product, session_code)
+                        qupdate = "UPDATE Products SET in_use='' WHERE id={0}" . format(id_product)
                         db.insert(qupdate)
                 except:
                     # roll back
