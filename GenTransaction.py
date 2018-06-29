@@ -31,7 +31,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
             for w in random_product:
                 id_product = w['idpro']
                 # lock this product from other transaction
-                qupdate = "UPDATE Products SET in_use='{0}' WHERE id={1} AND in_use='n' OR p.in_use=''" . format( session_code, id_product)
+                qupdate = "UPDATE Products SET in_use='{0}' WHERE id={1} AND in_use='n' OR in_use=''" . format(session_code, id_product)
                 db.insert(qupdate)
             
             ntrx = 0
