@@ -40,3 +40,11 @@ def gendesc(minitem=3, maxitem=100, minwords=5, maxwords=10, minchars=3, maxchar
 		ditem = genname(minwords,maxwords,minchars,maxchars, istitle)
 		group.append(ditem)
 	return ". ".join(group)+"."
+
+
+def GetConfig(str):
+        f = open("config.cnf","r")
+        config = f.read()
+        f.close()
+	getx = config.strip().split('{0}=' . format(str))[1]
+        return int(getx.strip().split(';')[0])
