@@ -43,6 +43,8 @@ def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2,
                         print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                     except:
                         print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
+                # if stock < 1
+                db.insert("update Products set stock=1 where stock < 1")
 
                         
 try:
