@@ -13,9 +13,10 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
         select_query = "SELECT id, firstname UName from Users WHERE 1 ORDER BY RAND() LIMIT {0}" . format(limit)
         cursor = db.query(select_query)
         nt = 0
+	#print(cursor)
         for (id) in cursor:
             currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-
+	    #print(id)
             # md5 for session code = receipt code
             sessioncode = '{0}|{1}' . format(id['id'], strftime("%Y-%m-%d %H:%M:%S", gmtime()))
             m = hashlib.md5()
@@ -24,14 +25,15 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
 
             # Users's buy 
             num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
-
+	    #print(num_of_products)
             # choose n product random
             # lock this product from other transaction
             qupdate = "UPDATE Products SET in_use='{0}' WHERE 1 AND in_use='' AND stock>={1} ORDER BY RAND() LIMIT {2}" . format(session_code, min_stock_can_sell, num_of_products)
             db.insert(qupdate)
-            
-            random_product = db.query("SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code))
-            print('random_product = {0}' . format(random_product))
+            #print(qupdate)
+	    qrandom = "SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code)
+            random_product = db.query(qrandom)
+            #print('qrandom = {0}' . format(qrandom))
             ntrx = 0
             num_item_buy = 0
             sum_num_item_buy = 0
@@ -72,16 +74,14 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
             
                 except:
                     # roll back
-                    db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
+                    db.insert("DELETE FROM SessionOrders WHERE sessioncode='{0}'" . format(session_code))
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
             
-            for w in random_product:
-                id_product = w['idpro']
-                # unlock this product from other transaction
-                qupdate = "UPDATE Products SET in_use='' WHERE id={0}" . format(id_product)
-                # print('rezero product = {0}' . format(qupdate))
-                db.insert(qupdate)
+	    #print('session_code = {0}' . format(session_code))
+	    qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
+            db.insert(qrezero)
+
 '''
 import time
 timeout = time.time() + 60*5   # 5 minutes from now
@@ -96,7 +96,7 @@ while True:
 import cv2
 while True:
     k = cv2.waitKey(1) & 0xFF
-    Transaction(limit=10)
+    fgfgfdTransaction(limit=10)
     # press 'q' to exit
     if k == ord('q'):
         break
