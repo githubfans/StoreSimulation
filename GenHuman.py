@@ -1,5 +1,5 @@
 from Database import Database
-from Functions import genword, genname, gendesc
+from Functions import genword, genname, gendesc, GetConfig
 from time import gmtime, strftime
 import sys
 import random
