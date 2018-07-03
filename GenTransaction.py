@@ -102,20 +102,12 @@ while True:
 '''
 try:
     while True:
-        f = open("config.cnf","r")
-        config = f.read()
-        f.close()
-        
-        gentrx_limitx = config.strip().split('gentrx_limit=')[1]
-        gentrx_limit = int(gentrx_limitx.strip().split(';')[0])
+        gentrx_limit = GetConfig('gentrx_limit')
         if gentrx_limit >= 1 :
             print('gentrx_limit = {0}' . format(gentrx_limit))
-            gentrx_buy_numpro_minx = config.strip().split('gentrx_buy_numpro_min=')[1]
-            gentrx_buy_numpro_min = int(gentrx_buy_numpro_minx.strip().split(';')[0])
-            gentrx_buy_numpro_maxx = config.strip().split('gentrx_buy_numpro_max=')[1]
-            gentrx_buy_numpro_max = int(gentrx_buy_numpro_maxx.strip().split(';')[0])
-            gentrx_stock_requirementx = config.strip().split('gentrx_stock_requirement=')[1]
-            gentrx_stock_requirement = int(gentrx_stock_requirementx.strip().split(';')[0])
+            gentrx_buy_numpro_min = GetConfig('gentrx_buy_numpro_min')
+            gentrx_buy_numpro_max = GetConfig('gentrx_buy_numpro_max')
+            gentrx_stock_requirement = GetConfig('gentrx_stock_requirement')
             print('gentrx_buy_numpro_min = {0} | gentrx_buy_numpro_max = {1} | gentrx_stock_requirement = {2}' . format(gentrx_buy_numpro_min, gentrx_buy_numpro_max, gentrx_stock_requirement))
             Transaction(limit=gentrx_limit, minbuy_numpro=gentrx_buy_numpro_min, maxbuy_numpro=gentrx_buy_numpro_max, min_stock_can_sell=gentrx_stock_requirement)
         else:
