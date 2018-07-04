@@ -10,7 +10,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
         db = Database()
         
         # choose n Users/buyers random
-        select_query = "SELECT id, firstname UName from Users Where 1 order by RAND() LIMIT {0}" . format(limit)
+        select_query = "SELECT id, firstname UName from Users WHERE 1 ORDER BY RAND() LIMIT {0}" . format(limit)
         cursor = db.query(select_query)
         nt = 0
         for (id) in cursor:
@@ -31,7 +31,7 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
             db.insert(qupdate)
             
             random_product = db.query("SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code))
-            
+            print('random_product = {0}' . format(random_product))
             ntrx = 0
             num_item_buy = 0
             sum_num_item_buy = 0
