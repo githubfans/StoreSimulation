@@ -85,7 +85,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             
 	    #print('session_code = {0}' . format(session_code))
 	    qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
-            db.insert(qrezero)
+        db.insert(qrezero)
 
 '''
 import time
