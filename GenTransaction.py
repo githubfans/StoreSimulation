@@ -49,7 +49,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                 print('49')
                 for w in random_product:
                     print('51')
-                    id_product = w['idpro']
+                    print(w)
                     print('53')
             except:
             
