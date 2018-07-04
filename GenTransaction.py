@@ -83,9 +83,9 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
             
-	    #print('session_code = {0}' . format(session_code))
-	    qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
-        db.insert(qrezero)
+			#print('session_code = {0}' . format(session_code))
+			qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
+			db.insert(qrezero)
 
 '''
 import time
