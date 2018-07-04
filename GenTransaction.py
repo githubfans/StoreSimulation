@@ -41,8 +41,11 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                 random_product = db.query(qrandom)
             except:
                 print('error select random_product')
-            try:
-                if random_product is not None:
+            
+            if random_product is not None:
+
+                try:
+
                     for w in random_product:
                         id_product = w['idpro']
                         #pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
@@ -71,11 +74,14 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                                     ntrx += 1
                                 except:
                                     print('error insert SessionOrders')       
-                else:
-                    print('random_product is NONE')
-            except:
-                print('error random_product')
+               
+                except:
                 
+                    print('error random_product')
+                
+            else:
+                print('random_product is NONE')
+            
             if ntrx > 0:
                 try:
                     nt += 1
