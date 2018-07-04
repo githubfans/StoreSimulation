@@ -98,7 +98,7 @@ try:
             gentrx_buy_numpro_max = GetConfig('gentrx_buy_numpro_max')
             gentrx_stock_requirement = GetConfig('gentrx_stock_requirement')
             print('gentrx_buy_numpro_min = {0} | gentrx_buy_numpro_max = {1} | gentrx_stock_requirement = {2}' . format(gentrx_buy_numpro_min, gentrx_buy_numpro_max, gentrx_stock_requirement))
-            Transaction(limit=gentrx_limit, minbuy_numpro=gentrx_buy_numpro_min, maxbuy_numpro=gentrx_buy_numpro_max, min_stock_can_sell=gentrx_stock_requirement)
+            Transaction(num_buyer=gentrx_limit, minbuy_numpro=gentrx_buy_numpro_min, maxbuy_numpro=gentrx_buy_numpro_max, min_stock_can_sell=gentrx_stock_requirement)
         else:
             pass
 except KeyboardInterrupt:
