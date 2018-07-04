@@ -50,13 +50,14 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
 
                 try:
                     print('52')
-
                     for w in random_product:
-                        print('55')
+                        print('54')
                         id_product = w['idpro']
-                        #pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
-                        #for st in pstock:
-                        #    pstock_ = st['stock']
+                        '''
+                        pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
+                        for st in pstock:
+                            pstock_ = st['stock']
+                        '''
                         pstock_ = w['stock']
                         print('pstock_ = {0}' . format(pstock_))
                         '''
@@ -81,7 +82,8 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                                     ntrx += 1
                                 except:
                                     print('error insert SessionOrders')       
-                        '''   
+                        '''
+                        print('86')
                 except:
                 
                     print('error random_product')
@@ -101,10 +103,12 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                     db.insert("DELETE FROM SessionOrders WHERE sessioncode='{0}'" . format(session_code))
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
-            
+            print('106')
             #print('session_code = {0}' . format(session_code))
             qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
+            print('109')
             db.insert(qrezero)
+            print('111')
 
 
 try:
