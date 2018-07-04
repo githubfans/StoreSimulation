@@ -41,17 +41,18 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             try:                
                 qrandom = "SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code)
                 random_product = db.query(qrandom)
+                print(qrandom)
                 print('random_product = {0}' . format(random_product))
             except:
                 print('error select random_product')
-                print(47)
+                print(48)
             
             if random_product is not None:
-                print(50)
-
+                print(51)
                 try:
-
+                    print(53)
                     for w in random_product:
+                        print(55)
                         id_product = w['idpro']
                         #pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
                         #for st in pstock:
