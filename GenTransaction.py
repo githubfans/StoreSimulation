@@ -25,18 +25,19 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
 
             # Users's buy 
             num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
-	    	#print(num_of_products)
-            # choose n product random
+	    	
+			# choose n product random
             # lock this product from other transaction
             qupdate = "UPDATE Products SET in_use='{0}' WHERE 1 AND in_use='' AND stock>={1} ORDER BY RAND() LIMIT {2}" . format(session_code, min_stock_can_sell, num_of_products)
             db.insert(qupdate)
-            #print(qupdate)
-	    	qrandom = "SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code)
+
+			qrandom = "SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code)
             random_product = db.query(qrandom)
-            #print('qrandom = {0}' . format(qrandom))
-            ntrx = 0
+            
+			ntrx = 0
             num_item_buy = 0
             sum_num_item_buy = 0
+			
 			try:
 				for w in random_product:
 					id_product = w['idpro']
