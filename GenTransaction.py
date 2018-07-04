@@ -35,6 +35,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             ntrx = 0
             num_item_buy = 0
             sum_num_item_buy = 0
+            random_product = ''
             
             try:                
                 qrandom = "SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code)
