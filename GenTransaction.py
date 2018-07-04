@@ -37,9 +37,10 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
             sum_num_item_buy = 0
             for w in random_product:
                 id_product = w['idpro']
-                pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
-                for st in pstock:
-                    pstock_ = st['stock']
+                #pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
+                #for st in pstock:
+                #    pstock_ = st['stock']
+                pstock_ = w['stock']
                 if pstock_ >= 1:
                     if pstock_ is 1:
                         num_item_buy = 1
