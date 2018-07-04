@@ -59,6 +59,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                         #    pstock_ = st['stock']
                         pstock_ = w['stock']
                         print('pstock_ = {0}' . format(pstock_))
+                        '''
                         if pstock_ >= 1:
                             if pstock_ is 1:
                                 num_item_buy = 1
@@ -80,7 +81,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                                     ntrx += 1
                                 except:
                                     print('error insert SessionOrders')       
-               
+                        '''   
                 except:
                 
                     print('error random_product')
