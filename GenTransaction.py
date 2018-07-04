@@ -69,17 +69,18 @@ def Transaction(limit=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_sell=1
                     print('User :{0}, total items = {1}' . format(buyer_name, sum_num_item_buy))
                     print('{0} Transaction : {1} successfully\n' . format(nt, session_code))
             
-                    for w in random_product:
-                        id_product = w['idpro']
-                        # unlock this product from other transaction
-                        qupdate = "UPDATE Products SET in_use='' WHERE id={0}" . format(id_product)
-                        # print('rezero product = {0}' . format(qupdate))
-                        db.insert(qupdate)
                 except:
                     # roll back
                     db.insert("DELETE FROM SessionOrders WHERE SessCode='{0}'" . format(session_code))
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
+            
+            for w in random_product:
+                id_product = w['idpro']
+                # unlock this product from other transaction
+                qupdate = "UPDATE Products SET in_use='' WHERE id={0}" . format(id_product)
+                # print('rezero product = {0}' . format(qupdate))
+                db.insert(qupdate)
 '''
 import time
 timeout = time.time() + 60*5   # 5 minutes from now
