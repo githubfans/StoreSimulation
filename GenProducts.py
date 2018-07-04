@@ -6,7 +6,7 @@ import random
 import time
 
 
-def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2, min_nstock=1, max_nstock=5):
+def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_numnewpro=1, max_numnewpro=2, min_nstock=1, max_nstock=5):
     if __name__ == "__main__":
         db = Database()
         
@@ -33,13 +33,14 @@ def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2,
                         print('{0}  Product created : {1} ({2} items)' . format(id['firstname'], title, nstock))
                         db.insert(query)
             
+            # restock here.....
             elif restock_or_generate > 1:
-                select_query = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} order by RAND() LIMIT 200" . format(id['id'])
-                cursor = db.query(select_query)
+                select_product = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} order by RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
+                cursor = db.query(select_product)
                 for (Pid) in cursor:
                     try:
                         num_restock = random.randint(min_nstock,max_nstock)
-                        db.insert("UPDATE Products SET stock=stock+{0} where 1 and id={1}" . format(num_restock, Pid['id']))
+                        db.insert("UPDATE Products SET stock=stock+{0} WHERE 1 AND id={1}" . format(num_restock, Pid['id']))
                         print('Restock {0} + {1}' . format(Pid['title'], num_restock))
                     except:
                         print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
@@ -49,35 +50,21 @@ def GenProducts(limit=1, restockprobability=5, min_numnewpro=1, max_numnewpro=2,
                         
 try:
     while True:
-        f = open("config.cnf","r")
-        config = f.read()
-        f.close()
         
-        genpro_sleepx = config.strip().split('genpro_sleep=')[1]
-        genpro_sleep = int(genpro_sleepx.strip().split(';')[0])
-        
-        genpro_limitx = config.strip().split('genpro_limit=')[1]
-        genpro_limit = int(genpro_limitx.strip().split(';')[0])
-        #print('genpro_limit = {0}' . format(genpro_limit))
+        genpro_sleep = GetConfig('genpro_sleep')
+        genpro_limit = GetConfig('genpro_limit')
         
         if genpro_limit >= 1 :
         
             # probability = 5 >> 1 for new product and 5 for restock 
-            genpro_restockprobabilityx = config.strip().split('genpro_restockprobability=')[1]
-            genpro_restockprobability = int(genpro_restockprobabilityx.strip().split(';')[0])
-
-            genpro_nstock_minx = config.strip().split('genpro_nstock_min=')[1]
-            genpro_nstock_min = int(genpro_nstock_minx.strip().split(';')[0])
-            genpro_nstock_maxx = config.strip().split('genpro_nstock_max=')[1]
-            genpro_nstock_max = int(genpro_nstock_maxx.strip().split(';')[0])
-
-            genpro_numnewpro_minx = config.strip().split('genpro_numnewpro_min=')[1]
-            genpro_numnewpro_min = int(genpro_numnewpro_minx.strip().split(';')[0])
-
-            genpro_numnewpro_maxx = config.strip().split('genpro_numnewpro_max=')[1]
-            genpro_numnewpro_max = int(genpro_numnewpro_maxx.strip().split(';')[0])
+            genpro_restockprobability = GetConfig('genpro_restockprobability')
+            genpro_numproducttorestock = GetConfig('genpro_numproducttorestock')
+            genpro_nstock_min = GetConfig('genpro_nstock_min')
+            genpro_nstock_max = GetConfig('genpro_nstock_max')
+            genpro_numnewpro_min = GetConfig('genpro_numnewpro_min')
+            genpro_numnewpro_max = GetConfig('genpro_numnewpro_max')
             
-            GenProducts(limit=genpro_limit, restockprobability=genpro_restockprobability, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
+            GenProducts(numseller=genpro_limit, restockprobability=genpro_restockprobability, numproduct_restock=genpro_numproducttorestock, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
             if genpro_sleep >= 1:
                 time.sleep(genpro_sleep)
         
