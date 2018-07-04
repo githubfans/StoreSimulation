@@ -44,52 +44,16 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             except:
                 print('45')
                 print('error select random_product')
-            
-            if random_product is not None:
-                print('49')
 
-                try:
-                    print('52')
-                    for w in random_product:
-                        print('54')
-                        id_product = w['idpro']
-                        '''
-                        pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
-                        for st in pstock:
-                            pstock_ = st['stock']
-                        
-                        pstock_ = w['stock']
-                        print('pstock_ = {0}' . format(pstock_))
-                        
-                        if pstock_ >= 1:
-                            if pstock_ is 1:
-                                num_item_buy = 1
-                            else:    
-                                num_item_buy = random.randint(1,pstock_)
-                            sum_num_item_buy += num_item_buy
-                            diff_after_buy = pstock_ - num_item_buy 
-                            if diff_after_buy >= 0:
-                                #print('{0} - {1}' . format(id_product, num_item_buy))
-                                qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', sessioncode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
-                                #print(qinsert)
-                                qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
-                                #print(qupdate)
-                                buyer_name = id['UName']
-                                try:
-                                    db.insert(qinsert)
-                                    db.insert(qupdate)
-                                    #print('{0} buy {1} ({2} items)' . format(buyer_name, w['title'], num_item_buy))
-                                    ntrx += 1
-                                except:
-                                    print('error insert SessionOrders')       
-                        '''
-                        print('86')
-                except:
-                
-                    print('error random_product')
-                
-            else:
-                print('random_product is NONE')
+            try:
+                print('49')
+                for w in random_product:
+                    print('51')
+                    id_product = w['idpro']
+                    print('53')
+            except:
+            
+                print('error random_product')
             
             if ntrx > 0:
                 try:
@@ -103,13 +67,10 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                     db.insert("DELETE FROM SessionOrders WHERE sessioncode='{0}'" . format(session_code))
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
-            print('106')
+
             #print('session_code = {0}' . format(session_code))
             qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
-            print('109')
             db.insert(qrezero)
-            print('111')
-
 
 try:
     while True:
