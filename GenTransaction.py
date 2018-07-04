@@ -23,6 +23,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             m = hashlib.md5()
             m.update(sessioncode)
             session_code = m.hexdigest()
+            print(session_code)
 
             # Users's buy 
             num_of_products = random.randint(minbuy_numpro,maxbuy_numpro)
@@ -37,23 +38,51 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             sum_num_item_buy = 0
             random_product = ''
             
-            try:   
-                print('41')             
+            try:                
                 qrandom = "SELECT p.id idpro, idSeller, title, stock, s.firstname SName FROM Products p JOIN Seller s on p.idSeller=s.id WHERE 1 AND p.in_use='{0}'" . format(session_code)
                 random_product = db.query(qrandom)
             except:
-                print('45')
                 print('error select random_product')
-
-            try:
-                print('49')
-                for w in random_product:
-                    print('51')
-                    print(w)
-                    print('53')
-            except:
             
-                print('error random_product')
+            if random_product is not None:
+
+                try:
+
+                    for w in random_product:
+                        id_product = w['idpro']
+                        #pstock = db.query("select stock from Products where 1 and id={0}" . format(id_product))
+                        #for st in pstock:
+                        #    pstock_ = st['stock']
+                        pstock_ = w['stock']
+                        print('pstock_ = {0}' . format(pstock_))
+                        if pstock_ >= 1:
+                            if pstock_ is 1:
+                                num_item_buy = 1
+                            else:    
+                                num_item_buy = random.randint(1,pstock_)
+                            sum_num_item_buy += num_item_buy
+                            diff_after_buy = pstock_ - num_item_buy 
+                            if diff_after_buy >= 0:
+                                #print('{0} - {1}' . format(id_product, num_item_buy))
+                                qinsert = "INSERT INTO SessionOrders SET idProduct={0}, numItems={1}, idUser={2}, dateadd='{3}', sessioncode='{4}'" . format(id_product, num_item_buy, id['id'], currdatetime, session_code)
+                                #print(qinsert)
+                                qupdate = "UPDATE Products SET stock=stock-{0} WHERE id={1}" . format(num_item_buy, id_product)
+                                #print(qupdate)
+                                buyer_name = id['UName']
+                                try:
+                                    db.insert(qinsert)
+                                    db.insert(qupdate)
+                                    #print('{0} buy {1} ({2} items)' . format(buyer_name, w['title'], num_item_buy))
+                                    ntrx += 1
+                                except:
+                                    print('error insert SessionOrders')       
+               
+                except:
+                
+                    print('error random_product')
+                
+            else:
+                print('random_product is NONE')
             
             if ntrx > 0:
                 try:
@@ -67,10 +96,11 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
                     db.insert("DELETE FROM SessionOrders WHERE sessioncode='{0}'" . format(session_code))
                     db.insert("UPDATE Products SET stock=stock+{0} WHERE id={1}" . format(num_item_buy, id_product))
                     print('error transaction.. rollback done..')
-
+            
             #print('session_code = {0}' . format(session_code))
             qrezero = "UPDATE Products SET in_use='' WHERE 1 AND in_use='{0}'" . format(session_code)
             db.insert(qrezero)
+
 
 try:
     while True:
