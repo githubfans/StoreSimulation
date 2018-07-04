@@ -35,8 +35,8 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
             
             # restock here.....
             elif restock_or_generate > 1:
-                select_product = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} order by RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
-                cursor = db.query(select_product)
+                sproduct = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} order by RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
+                cursor = db.query(sproduct)
                 for (Pid) in cursor:
                     try:
                         num_restock = random.randint(min_nstock,max_nstock)
@@ -45,7 +45,7 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
                     except:
                         print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
                 # if stock < 1
-                db.insert("update Products set stock=1 where stock < 0")
+                #db.insert("update Products set stock=1 where stock < 0")
 
                         
 try:
