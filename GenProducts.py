@@ -48,7 +48,7 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
                                 print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
                     else:
                         num_restock = random.randint(min_nstock,max_nstock)
-                        qupdate_restock = "UPDATE Products SET stock=stock+{0} WHERE 1 AND in_use='' AND stock<{1} ORDER BY RAND() DESC LIMIT {2}" . format(num_restock, limitstock_mustrestock, numproduct_restock)
+                        qupdate_restock = "UPDATE Products SET stock=stock+{0} WHERE 1 AND in_use='' AND stock<{1} and idSeller={2} ORDER BY RAND() DESC LIMIT {3}" . format(num_restock, limitstock_mustrestock, id['id'], numproduct_restock)
                         db.insert(qupdate_restock)
                         print('new stock {0} for {1} products... \nrestock successfully !!' . format(num_restock, numproduct_restock))
                         
