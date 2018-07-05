@@ -1,18 +1,20 @@
 gentrx_limit=1; ... 0 = pause
 gentrx_sleep=0;
-gentrx_buy_numpro_min=100;
-gentrx_buy_numpro_max=200;
+gentrx_buy_numpro_min=1;
+gentrx_buy_numpro_max=20;
 gentrx_stock_requirement=1;
 
-genpro_limit=10; ... 0 = pause
-genpro_sleep=1;
-genpro_restockprobability=100;
-genpro_numproducttorestock=10;
+genpro_limit=1; ... 0 = pause
+genpro_sleep=0;
+genpro_restockprobability=100; ... 1 = new product, >1 = restock
+genpro_numproducttorestock=1000;
 genpro_nstock_min=1;
-genpro_nstock_max=5;
-genpro_numnewpro_min=1;
-Igenpro_numnewpro_max=5;
+genpro_nstock_max=1000;
+genpro_minstock_canrestock=1;
+genpro_numnewpro_min=10;
+genpro_numnewpro_max=50;
 genpro_stockrequirement=1;
+genpro_restock_per_seller=1; ... 1 = random seller, 0 = random product 
 
 genuser_limit=1;
 genseller_limit=1;
