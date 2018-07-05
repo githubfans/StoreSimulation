@@ -36,7 +36,7 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
             # restock here.....
             elif restock_or_generate > 1:
                 try:
-                    if type_of_restock=1: 
+                    if type_of_restock is 1: 
                         sproduct = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} ORDER BY RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
                         cursor = db.query(sproduct)
                         for (Pid) in cursor:
