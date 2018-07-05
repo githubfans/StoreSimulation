@@ -6,7 +6,7 @@ import random
 import time
 
 
-def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_numnewpro=1, max_numnewpro=2, min_nstock=1, max_nstock=5):
+def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_numnewpro=1, max_numnewpro=2, min_nstock=1, max_nstock=5, limitstock_mustrestock=1, type_of_restock=1):
     if __name__ == "__main__":
         db = Database()
         
@@ -36,23 +36,24 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
             # restock here.....
             elif restock_or_generate > 1:
                 try:
-                    num_restock = random.randint(min_nstock,max_nstock)
-                    qupdate_restock = "UPDATE Products SET stock=stock+{0} WHERE 1 AND in_use='' AND stock<1 ORDER BY RAND() DESC LIMIT {1}" . format(num_restock, numproduct_restock)
-                    db.insert(qupdate_restock)
-                    print('new stock {0} for {1} products... \nrestock successfully !!' . format(num_restock, numproduct_restock))
+                    if type_of_restock is not 1: 
+                        num_restock = random.randint(min_nstock,max_nstock)
+                        qupdate_restock = "UPDATE Products SET stock=stock+{0} WHERE 1 AND in_use='' AND stock<{1} ORDER BY RAND() DESC LIMIT {2}" . format(num_restock, limitstock_mustrestock, numproduct_restock)
+                        db.insert(qupdate_restock)
+                        print('new stock {0} for {1} products... \nrestock successfully !!' . format(num_restock, numproduct_restock))
+                    else:
+                        sproduct = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} ORDER BY RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
+                        cursor = db.query(sproduct)
+                        for (Pid) in cursor:
+                            try:
+                                num_restock = random.randint(min_nstock,max_nstock)
+                                db.insert("UPDATE Products SET stock=stock+{0} WHERE 1 AND id={1}" . format(num_restock, Pid['id']))
+                                print('Restock {0} + {1}' . format(Pid['title'], num_restock))
+                            except:
+                                print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
+                        
                 except:
                     print('restock FAIL !!')
-                '''
-                sproduct = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} ORDER BY RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
-                cursor = db.query(sproduct)
-                for (Pid) in cursor:
-                    try:
-                        num_restock = random.randint(min_nstock,max_nstock)
-                        db.insert("UPDATE Products SET stock=stock+{0} WHERE 1 AND id={1}" . format(num_restock, Pid['id']))
-                        print('Restock {0} + {1}' . format(Pid['title'], num_restock))
-                    except:
-                        print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
-                '''
                 # if stock < 1
                 #db.insert("update Products set stock=1 where stock < 0")
 
@@ -68,12 +69,14 @@ try:
             # probability = 5 >> 1 for new product and 5 for restock 
             genpro_restockprobability = GetConfig('genpro_restockprobability')
             genpro_numproducttorestock = GetConfig('genpro_numproducttorestock')
+            genpro_restock_per_seller = GetConfig('genpro_restock_per_seller')
             genpro_nstock_min = GetConfig('genpro_nstock_min')
             genpro_nstock_max = GetConfig('genpro_nstock_max')
+            genpro_restock_per_seller = GetConfig('genpro_restock_per_seller')
             genpro_numnewpro_min = GetConfig('genpro_numnewpro_min')
             genpro_numnewpro_max = GetConfig('genpro_numnewpro_max')
             
-            GenProducts(numseller=genpro_limit, restockprobability=genpro_restockprobability, numproduct_restock=genpro_numproducttorestock, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max)
+            GenProducts(numseller=genpro_limit, restockprobability=genpro_restockprobability, numproduct_restock=genpro_numproducttorestock, min_numnewpro=genpro_numnewpro_min, max_numnewpro=genpro_numnewpro_max, min_nstock=genpro_nstock_min, max_nstock=genpro_nstock_max, limitstock_mustrestock=genpro_restock_per_seller, type_of_restock=genpro_restock_per_seller)
             if genpro_sleep >= 1:
                 time.sleep(genpro_sleep)
         
