@@ -29,7 +29,7 @@ def Transaction(num_buyer=1, minbuy_numpro=1, maxbuy_numpro=10, min_stock_can_se
             
             # choose n product random
             # lock this product from other transaction
-            qupdate = "UPDATE Products SET in_use='{0}' WHERE 1 AND in_use='' AND stock>={1} ORDER BY RAND() LIMIT {2}" . format(session_code, min_stock_can_sell, num_of_products)
+            qupdate = "UPDATE Products SET in_use='{0}' WHERE 1 AND in_use='' AND stock>={1} ORDER BY stock DESC LIMIT {2}" . format(session_code, min_stock_can_sell, num_of_products)
             db.insert(qupdate)
             
             ntrx = 0
