@@ -21,6 +21,7 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
 
             # new products
             if restock_or_generate is 1:
+                print('NEW PRODUCT.......')
                 currdatetime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
                 # how many Product
                 for w in range(random.randint(min_numnewpro, max_numnewpro)):
@@ -35,8 +36,10 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
             
             # restock here.....
             elif restock_or_generate > 1:
+                print('RESTOCK.......')
                 try:
                     if type_of_restock is 1: 
+                        print('by random num stock.......')
                         sproduct = "SELECT id, title from Products Where 1 and stock<1 and idSeller={0} ORDER BY RAND() LIMIT {1}" . format(id['id'], numproduct_restock)
                         cursor = db.query(sproduct)
                         for (Pid) in cursor:
@@ -47,6 +50,7 @@ def GenProducts(numseller=1, restockprobability=5, numproduct_restock=1, min_num
                             except:
                                 print('Restock Fail {0} + {1}' . format(Pid['title'], num_restock))
                     else:
+                        print('by same stock for all product.......')
                         num_restock = random.randint(min_nstock,max_nstock)
                         qupdate_restock = "UPDATE Products SET stock=stock+{0} WHERE 1 AND in_use='' AND stock<{1} and idSeller={2} ORDER BY RAND() DESC LIMIT {3}" . format(num_restock, limitstock_mustrestock, id['id'], numproduct_restock)
                         db.insert(qupdate_restock)
